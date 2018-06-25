@@ -10,8 +10,8 @@
             h1 {
                 font-family: Helvetica, sans-serif;
                 font-size: 10vw;
-                color: rgba(0, 0, 255, 0.75);
-                text-shadow: 1vw 1vw 0 rgba(255, 0, 0, 0.5);
+                color: rgba(0, 0, 255, 0.6);
+                text-shadow: 0.5vw 0.5vw 0 rgba(255, 0, 0, 0.4);
                 text-align: center;
                 text-transform: uppercase;
             }
@@ -27,14 +27,38 @@
             }
 
             section {
-
                 padding: 1vh 1vw;
                 margin: 0;
-
                 height: 100vh;
                 width: 100vw;
                 z-index: 2;
+            }
 
+            .scratch {
+                height: inherit;
+            }
+
+            .scratch:after {
+                z-index: 2;
+                content: '';
+                width: 100%;
+                height: 100%;
+                position: absolute;
+                top: 0;
+                left: 0;
+                opacity: .08;
+                background: url('scratch.png') repeat center center;
+                animation: scratch_animation 0.45s steps(1) infinite;
+            }
+
+            .cuemark:before {
+                z-index: 1;
+                opacity: 0;
+                background-image: url(cuemark.png);
+                background-size: 10vw;
+                background-repeat: no-repeat;
+                background-position: top right;
+                animation: cuemark_animation 120s steps(120) infinite;
             }
 
             .noise:before{
@@ -43,12 +67,13 @@
             }
 
             .vignette:after {
-                box-shadow: inset 0 0 10vw 1vw rgba(0,0,0,0.3);
+                box-shadow: inset 0 0 10vw 2vw rgba(0,0,0,0.3);
                 background-color: rgba(255, 255, 255, 0.1);
+                z-index: -1; /* Push vignette to underlaying layer */
                 animation: vignette_animation 0.5s steps(11) infinite;
             }
 
-            .noise:before, .vignette:after {    
+            .noise:before, .vignette:after, .cuemark:before {    
                 pointer-events: none;
                 content: "";
                 position: absolute;
@@ -56,10 +81,6 @@
                 left: 0;
                 right:0;
                 bottom:0;
-            }
-
-            .vignette:after{
-                z-index: -1; /* Push vignette to underlaying layer */
             }
 
             *{
@@ -73,64 +94,133 @@
                 z-index: 10;
             }
 
+            @keyframes scratch_animation {
+                0%, 100% {
+                    transform: translateX(0);
+                    opacity: 0.075;
+                }
+                10% {
+                    transform: translateX(-1%);
+                }
+
+                20% {
+                    transform: translateX(1%);
+                }
+
+                30% {
+                    transform: translateX(-2%);
+                        opacity: 0.09;
+                }
+
+                40% {
+                    transform: translateX(3%);
+                }
+
+                50% {
+                    transform: translateX(-3%);
+                    opacity: 0.05;
+                }
+
+                60% {
+                    transform: translateX(8%);
+                }
+
+                70% {
+                    transform: translateX(-3%);
+                }
+
+                80% {
+                    transform: translateX(10%);
+                    opacity: 0.02;
+                }
+
+                90% {
+                    transform: translateX(-2%);
+                }                
+            }            
+
+            @keyframes cuemark_animation {
+                0% {
+                    opacity: 0;
+                }
+                94.7% {
+                    opacity: 0;
+                }
+                94.8% {
+                    opacity: 1;
+                }
+                94.9% {
+                    opacity: 0;
+                }
+                99.7% {
+                    opacity: 0;
+                }
+                99.8% {
+                    opacity: 1;
+                }
+                99.9% {
+                    opacity: 0;
+                }
+            }
+
             @keyframes grain_animation {
                 0% { background-position: 0 0; }
                 10% { background-position: -7px -7px; }
-                20% { background-position: -7px -7px; }
+                20% { background-position: 7px 7px; }
                 30% { background-position: 17px -17px; }
-                40% { background-position: 17px -17px; }    
+                40% { background-position: -17px 17px; }    
                 50% { background-position: 5px 5px; }
-                60% { background-position: 5px 5px; }
+                60% { background-position: -5px -5px; }
                 70% { background-position: -3px 3px; }
-                80% { background-position: -3px 3px; }
+                80% { background-position: 3px -3px; }
                 90% { background-position: 10% -5%; }
                 100% { background-position: -10% 8%; }
             }
 
             @keyframes vignette_animation {
                 0% { 
-                    box-shadow: inset 0 0 10vw 1.1vw rgba(0,0,0,0.3);
-                    background-color: rgba(255, 255, 255, 0);
+                    box-shadow: inset 0 0 10vw 2.5vw rgba(0,0,0,0.3);
+                    background-color: rgba(255, 255, 255, 0.01);
                 }
                 10% { 
-                    box-shadow: inset 0 0 10vw 1.05vw rgba(0,0,0,0.3);
-                    background-color: rgba(255, 255, 255, 0.009);
-                }
-                20% {
-                    box-shadow: inset 0 0 10vw 1.15vw rgba(0,0,0,0.3);
-                    background-color: rgba(230, 230, 230, 0.01);
-                }
-                30% { 
-                    box-shadow: inset 0 0 10vw 0.95vw rgba(0,0,0,0.3);
+                    box-shadow: inset 0 0 10vw 3vw rgba(0,0,0,0.3);
                     background-color: rgba(255, 255, 255, 0.015);
                 }
+                20% {
+                    box-shadow: inset 0 0 10vw 3.1vw rgba(0,0,0,0.3);
+                    background-color: rgba(230, 230, 230, 0.011);
+                }
+                30% { 
+                    box-shadow: inset 0 0 10vw 3vw rgba(0,0,0,0.3);
+                    background-color: rgba(255, 255, 255, 0.01);
+                }
                 40% { 
-                    box-shadow: inset 0 0 10vw 1.28vw rgba(0,0,0,0.3);
+                    box-shadow: inset 0 0 10vw 2.8vw rgba(0,0,0,0.3);
                     background-color: rgba(255, 255, 255, 0.008);
                 }
                 50% { 
-                    box-shadow: inset 0 0 10vw 1.3vw rgba(0,0,0,0.3);
-                    background-color: rgba(255, 255, 255, 0.01);
+                    box-shadow: inset 0 0 10vw 2vw rgba(0,0,0,0.3);
+                    background-color: rgba(255, 255, 255, 0.004);
                 }
                 60% {
-                    box-shadow: inset 0 0 10vw 1.15vw rgba(0,0,0,0.3);
-                    background-color: rgba(255, 255, 255, 0.006);
+                    box-shadow: inset 0 0 10vw 1.7vw rgba(0,0,0,0.3);
+                    background-color: rgba(255, 255, 255, 0);
                 }
                 70% {
-                    box-shadow: inset 0 0 10vw 1.26vw rgba(0,0,0,0.3);
-                    background-color: rgba(255, 255, 255, 0.003);
+                    box-shadow: inset 0 0 10vw 2vw rgba(0,0,0,0.3);
+                    background-color: rgba(255, 255, 255, 0.004);
                 }
                 80% {
-                    box-shadow: inset 0 0 10vw 0.95vw rgba(0,0,0,0.3);
-                    background-color: rgba(255, 255, 255, 0.007);
+                    box-shadow: inset 0 0 10vw 1.7vw rgba(0,0,0,0.3);
+                    background-color: rgba(255, 255, 255, 0);
                 }
                 90% {
-                    box-shadow: inset 0 0 10vw 1.12vw rgba(0,0,0,0.3);
-                    background-color: rgba(255, 255, 255, 0.01);
+                    box-shadow: inset 0 0 10vw 2.2vw rgba(0,0,0,0.3);
+                    background-color: rgba(255, 255, 255, 0.007);
                 }
                 100% {
-                    box-shadow: inset 0 0 10vw 1vw rgba(0,0,0,0.3);
-                    background-color: rgba(255, 255, 255, 0.008);
+                    box-shadow: inset 0 0 10vw 2.4vw rgba(0,0,0,0.3);
+                    background-color: rgba(255, 255, 255, 0.009);
                 }
             }
         
@@ -140,14 +230,13 @@
 
     <body>
 
-        <div id="page_wrapper" class="noise vignette">
-
-            <section>
-                <h1>This is a test</h1>
-            </section>
-
+            <div id="page_wrapper" class="noise vignette">
+                <div id="cue" class="cuemark">
+                    <section>
+                        <h1>This is a test</h1>
+                    </section>
+                </div>
+            </div>
         </div>
-
-    </body>
 
 </html>
